@@ -1,0 +1,113 @@
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--ink);
+  /* faint dot grid + a soft glow behind the hero */
+  background-image:
+    radial-gradient(ellipse 70% 40% at 20% 0%, rgba(77, 255, 166, 0.07), transparent 70%),
+    radial-gradient(rgba(124, 196, 255, 0.07) 1px, transparent 1px);
+  background-size: auto, 26px 26px;
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, p, ul, ol, dl, dd { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+
+a { color: var(--ice); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--phosphor); }
+
+::selection { background: var(--phosphor); color: var(--ink); }
+
+:focus-visible { outline: 2px solid var(--ice); outline-offset: 3px; }
+
+button, input, textarea, select { font: inherit; color: inherit; }
+
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  background: var(--phosphor);
+  color: var(--ink);
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-control);
+  z-index: 100;
+}
+.skip:focus { top: 0.75rem; }
+
+.prose {
+  font-family: var(--sans);
+  font-size: 1.02rem;
+  line-height: 1.7;
+  max-width: 64ch;
+  color: var(--text);
+}
+.prose + .prose { margin-top: 1rem; }
+
+/* tone helpers shared by the shell output and the packet table */
+.tone-ok, .tone-phosphor { --tone: var(--phosphor); }
+.tone-accent, .tone-ice { --tone: var(--ice); }
+.tone-warn, .tone-amber { --tone: var(--amber); }
+.tone-alert { --tone: var(--alert); }
+.tone-dim { --tone: var(--dim); }
+
+/* motion */
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes glitch-a {
+  0%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+  15% { clip-path: inset(10% 0 60% 0); transform: translate(-4px, 1px); }
+  35% { clip-path: inset(55% 0 15% 0); transform: translate(3px, -1px); }
+  60% { clip-path: inset(30% 0 40% 0); transform: translate(-2px, 0); }
+  80% { clip-path: inset(75% 0 5% 0); transform: translate(2px, 1px); }
+}
+@keyframes glitch-b {
+  0%, 100% { clip-path: inset(100% 0 0 0); transform: translate(0); }
+  20% { clip-path: inset(60% 0 10% 0); transform: translate(4px, 0); }
+  45% { clip-path: inset(5% 0 70% 0); transform: translate(-3px, 1px); }
+  70% { clip-path: inset(40% 0 35% 0); transform: translate(3px, -1px); }
+}
+
+.cursor {
+  display: inline-block;
+  width: 0.6ch;
+  height: 1.1em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: var(--phosphor);
+  animation: blink 1s steps(1) infinite;
+}
+
+.glitch { position: relative; display: inline-block; }
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 0 100% 0);
+  pointer-events: none;
+}
+.glitch::before { color: var(--ice); }
+.glitch::after { color: var(--alert); }
+
+/* one glitch when the name first appears, and again on hover */
+.boot__name .glitch::before { animation: glitch-a 0.7s 0.15s 1; }
+.boot__name .glitch::after { animation: glitch-b 0.7s 0.15s 1; }
+.glitch:hover::before { animation: glitch-a 0.5s 1; }
+.glitch:hover::after { animation: glitch-b 0.5s 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .cursor { animation: none; }
+  .glitch::before, .glitch::after { display: none; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}

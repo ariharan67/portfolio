@@ -1,0 +1,27 @@
+:root {
+  /* Surfaces */
+  --ink: #070d12;
+  --panel: #0c151c;
+  --panel-raised: #111e28;
+  --line: #1d303c;
+
+  /* Text */
+  --text: #cfdbe3;
+  --dim: #6d8493;
+
+  /* Signal colors (each one means something: ok, info, warning, danger) */
+  --phosphor: #4dffa6;
+  --ice: #7cc4ff;
+  --amber: #ffc247;
+  --alert: #ff5c7a;
+
+  /* Type */
+  --mono: "JetBrains Mono", "Fira Code", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --sans: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Shape and spacing */
+  --radius-window: 6px;
+  --radius-control: 4px;
+  --nav-h: 3.5rem;
+  --maxw: 1180px;
+}
